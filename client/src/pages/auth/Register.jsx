@@ -19,8 +19,6 @@ const RegisterPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const [role, setRole] = useState("");
-
   const { mutate: register, isLoading: registerLoading } = useAuthRegister({
     onSuccess: () => {
       toast({
@@ -57,14 +55,12 @@ const RegisterPage = () => {
   });
 
   const handleFormInput = (event) => {
-    console.log(event.target.value);
     formik.setFieldValue(event.target.name, event.target.value);
   };
 
-  // const handleSelectRole = (event) => {
-  //   setRole(event.target.value);
-  //   console.log(role);
-  // };
+  const handleSelectRole = (value) => {
+    formik.setFieldValue("role", value);
+  };
 
   return (
     <AuthLayout>
@@ -96,17 +92,9 @@ const RegisterPage = () => {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="role">Daftar sebagai</Label>
-
-                <Select
-                  className="w-full"
-                  name="role"
-                  onChange={handleFormInput}
-                >
+                <Select onValueChange={handleSelectRole}>
                   <SelectTrigger className="text-slate-500">
-                    <SelectValue
-                      placeholder="Pilih sebagai"
-                      className="text-slate-500"
-                    />
+                    <SelectValue placeholder="Pilih sebagai" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="pembeli">Pembeli</SelectItem>
